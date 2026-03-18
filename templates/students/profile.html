@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Profile - StudentMS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h1 class="h2 mb-4">👤 My Profile</h1>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="text-center mb-4">
+                            {% if student.profile_picture %}
+                            <img src="{{ student.profile_picture.url }}" alt="Profile" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;">
+                            {% else %}
+                            <div style="width: 120px; height: 120px; border-radius: 50%; background: #e0e0e0; display: flex; align-items: center; justify-content: center; font-size: 3rem; margin: 0 auto;">👤</div>
+                            {% endif %}
+                        </div>
+
+                        <h5 class="mb-3">📚 Student Information</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Roll Number</label>
+                                <input type="text" class="form-control" value="{{ student.roll_number }}" readonly>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">College ID</label>
+                                <input type="text" class="form-control" value="{{ student.college_id }}" readonly>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">📝 About</label>
+                            <textarea name="about" class="form-control" rows="4">{{ student.about }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">📷 Profile Picture</label>
+                            <input type="file" name="profile_picture" class="form-control" accept="image/*">
+                            <small class="text-muted">Optional - JPG, PNG</small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">✅ Update Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

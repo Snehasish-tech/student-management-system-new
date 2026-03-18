@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if subject %}Edit{% else %}Add{% endif %} Subject • StudentMS{% endblock %}
+
+{% block content %}
+<section class="section-wrap">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card-surface p-4 p-md-5">
+                <h2 class="mb-1">{% if subject %}Edit Subject{% else %}Add Subject{% endif %}</h2>
+                <p class="tiny-muted mb-4">Map subjects properly to courses.</p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="mb-3"><label class="form-label">Subject Name</label>{{ form.name }}</div>
+                    <div class="mb-3"><label class="form-label">Code</label>{{ form.code }}</div>
+                    <div class="mb-3"><label class="form-label">Course</label>{{ form.course }}</div>
+                    <div class="mb-4"><label class="form-label">Description</label>{{ form.description }}</div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-primary-soft" type="submit">Save Subject</button>
+                        <a href="{% url 'list_subjects' %}" class="btn btn-outline-soft">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

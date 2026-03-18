@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}My Results • StudentMS{% endblock %}
+
+{% block content %}
+<section class="section-wrap">
+    <h2 class="mb-3">My Results</h2>
+    <div class="row g-3 mb-3">
+        <div class="col-md-4"><div class="card-surface p-3"><small class="tiny-muted">Total Subjects</small><h3 class="mb-0">{{ total_subjects }}</h3></div></div>
+        <div class="col-md-4"><div class="card-surface p-3"><small class="tiny-muted">Total Marks</small><h3 class="mb-0">{{ total_marks }}</h3></div></div>
+        <div class="col-md-4"><div class="card-surface p-3"><small class="tiny-muted">Average</small><h3 class="mb-0">{{ avg_marks }}</h3></div></div>
+    </div>
+
+    <div class="card-surface table-card">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Marks</th>
+                        <th>Grade</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                        <tr>
+                            <td>{{ result.subject.name }}</td>
+                            <td>{{ result.marks }}</td>
+                            <td><span class="badge text-bg-primary">{{ result.grade }}</span></td>
+                            <td>{{ result.remarks|default:'-' }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="4" class="text-center tiny-muted py-4">No results available yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

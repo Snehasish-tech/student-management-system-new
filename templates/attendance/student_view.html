@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}My Attendance • StudentMS{% endblock %}
+
+{% block content %}
+<section class="section-wrap">
+    <h2 class="mb-3">My Attendance</h2>
+
+    <div class="row g-3 mb-3">
+        <div class="col-md-4"><div class="card-surface p-3"><small class="tiny-muted">Total Classes</small><h3 class="mb-0">{{ total }}</h3></div></div>
+        <div class="col-md-4"><div class="card-surface p-3"><small class="tiny-muted">Present</small><h3 class="mb-0">{{ present }}</h3></div></div>
+        <div class="col-md-4"><div class="card-surface p-3"><small class="tiny-muted">Attendance %</small><h3 class="mb-0">{{ percentage|floatformat:1 }}%</h3></div></div>
+    </div>
+
+    <div class="card-surface table-card">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in attendance %}
+                        <tr>
+                            <td>{{ item.date|date:'d M Y' }}</td>
+                            <td>
+                                {% if item.is_present %}
+                                    <span class="badge text-bg-success">Present</span>
+                                {% else %}
+                                    <span class="badge text-bg-danger">Absent</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ item.remarks|default:'-' }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="3" class="text-center tiny-muted py-4">No attendance records available.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

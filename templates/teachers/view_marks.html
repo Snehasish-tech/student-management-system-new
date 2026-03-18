@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}View Marks - StudentMS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="h2">📈 View Marks</h1>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom">
+            <h5 class="mb-0">📝 All Student Marks</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Student</th>
+                        <th>Subject</th>
+                        <th>Course</th>
+                        <th>Marks</th>
+                        <th>Grade</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td><strong>{{ result.student.user.get_full_name }}</strong></td>
+                        <td>{{ result.subject.name }}</td>
+                        <td>{{ result.subject.course.name }}</td>
+                        <td>
+                            <strong>{{ result.marks }}/100</strong>
+                        </td>
+                        <td>
+                            <span class="badge" style="background: {% if result.grade == 'A' %}#28a745{% elif result.grade == 'B' %}#17a2b8{% elif result.grade == 'C' %}#ffc107{% elif result.grade == 'D' %}#fd7e14{% else %}#dc3545{% endif %};">
+                                {{ result.grade }}
+                            </span>
+                        </td>
+                        <td class="text-muted small">{{ result.remarks|truncatewords:5|default:"—" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4">No marks records found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

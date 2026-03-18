@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Login • StudentMS{% endblock %}
+
+{% block content %}
+<section class="section-wrap">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card-surface p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #2459ff, #17b890); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">S</div>
+                </div>
+                
+                <h2 class="mb-1 text-center">Welcome back</h2>
+                <p class="tiny-muted mb-4 text-center">Sign in to your StudentMS account to continue.</p>
+
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" name="email" placeholder="you@example.com" required autofocus>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_password" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="••••••••" required>
+                    </div>
+
+                    {% if messages %}
+                    <div class="mb-3">
+                        {% for message in messages %}
+                            {% if message.tags == "error" %}
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% elif message.tags == "success" %}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <button type="submit" class="btn btn-primary-soft w-100 py-2 mb-3">Sign In</button>
+                </form>
+
+                <div class="text-center">
+                    <p class="tiny-muted mb-0">Don't have an account? <a href="{% url 'signup' %}" style="color: var(--primary); font-weight: 600; text-decoration: none;">Create one</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

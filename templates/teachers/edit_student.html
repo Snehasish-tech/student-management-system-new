@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Student - StudentMS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h1 class="h2 mb-4">✏️ Edit Student</h1>
+
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <h5 class="mb-3">👤 User Information</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">First Name</label>
+                                <input type="text" name="first_name" class="form-control" value="{{ student.user.first_name }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" name="last_name" class="form-control" value="{{ student.user.last_name }}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" value="{{ student.user.email }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input type="text" class="form-control" value="{{ student.user.username }}" readonly>
+                            <small class="text-muted">Username cannot be changed</small>
+                        </div>
+
+                        <hr>
+
+                        <h5 class="mb-3">📚 Student Information</h5>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Roll Number</label>
+                                <input type="text" name="roll_number" class="form-control" value="{{ student.roll_number }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">College ID</label>
+                                <input type="text" name="college_id" class="form-control" value="{{ student.college_id }}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Course</label>
+                            <select name="course" class="form-control">
+                                <option value="">Select Course</option>
+                                {% for course in courses %}
+                                <option value="{{ course.id }}" {% if student.course.id == course.id %}selected{% endif %}>{{ course.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">About</label>
+                            <textarea name="about" class="form-control" rows="3">{{ student.about }}</textarea>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">✅ Update Student</button>
+                            <a href="{% url 'manage_students' %}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

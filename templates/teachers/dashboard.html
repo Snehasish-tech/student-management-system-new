@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Teacher Dashboard - StudentMS{% endblock %}
+
+{% block content %}
+<section class="section-wrap">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="mb-1">Teacher Dashboard</h2>
+            <p class="tiny-muted mb-0">Welcome back, {{ user.get_full_name|default:user.username }}.</p>
+        </div>
+        <a href="{% url 'create_notice' %}" class="btn btn-primary-soft">Publish Notice</a>
+    </div>
+
+    <div class="row g-3 mb-3">
+        <div class="col-md-3">
+            <div class="card-surface p-3 h-100">
+                <small class="tiny-muted">Total Students</small>
+                <h3 class="mb-0">{{ students_count }}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card-surface p-3 h-100">
+                <small class="tiny-muted">Courses</small>
+                <h3 class="mb-0">{{ courses_count }}</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card-surface p-3 h-100">
+                <small class="tiny-muted">Attendance Tools</small>
+                <h3 class="mb-0">Ready</h3>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card-surface p-3 h-100">
+                <small class="tiny-muted">Result Records</small>
+                <h3 class="mb-0">Active</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-4"><a href="{% url 'manage_students' %}" class="card-surface p-4 d-block text-decoration-none text-dark h-100"><h5>Student Management</h5><p class="tiny-muted mb-0">Add, edit, and remove student records.</p></a></div>
+        <div class="col-md-4"><a href="{% url 'mark_attendance' %}" class="card-surface p-4 d-block text-decoration-none text-dark h-100"><h5>Attendance</h5><p class="tiny-muted mb-0">Mark attendance by course and date.</p></a></div>
+        <div class="col-md-4"><a href="{% url 'add_result' %}" class="card-surface p-4 d-block text-decoration-none text-dark h-100"><h5>Results</h5><p class="tiny-muted mb-0">Record marks and maintain grades.</p></a></div>
+        <div class="col-md-4"><a href="{% url 'list_courses' %}" class="card-surface p-4 d-block text-decoration-none text-dark h-100"><h5>Courses</h5><p class="tiny-muted mb-0">Manage courses and associated subjects.</p></a></div>
+        <div class="col-md-4"><a href="{% url 'list_subjects' %}" class="card-surface p-4 d-block text-decoration-none text-dark h-100"><h5>Subjects</h5><p class="tiny-muted mb-0">Create and organize course subjects.</p></a></div>
+        <div class="col-md-4"><a href="{% url 'notice_list' %}" class="card-surface p-4 d-block text-decoration-none text-dark h-100"><h5>Notice Board</h5><p class="tiny-muted mb-0">Publish and manage campus announcements.</p></a></div>
+    </div>
+</section>
+{% endblock %}

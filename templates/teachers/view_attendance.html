@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}View Attendance - StudentMS{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="h2">📅 Attendance Records</h1>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white border-bottom">
+            <h5 class="mb-0">📋 All Attendance Records</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Student</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in attendance %}
+                    <tr>
+                        <td><strong>{{ record.student.user.get_full_name }}</strong></td>
+                        <td>{{ record.date|date:"d M, Y" }}</td>
+                        <td>
+                            {% if record.is_present %}
+                            <span class="badge bg-success">✓ Present</span>
+                            {% else %}
+                            <span class="badge bg-danger">✗ Absent</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-muted">{{ record.remarks|default:"—" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-4">No attendance records found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

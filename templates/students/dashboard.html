@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard - StudentMS{% endblock %}
+
+{% block content %}
+<section class="section-wrap">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="mb-1">Student Dashboard</h2>
+            <p class="tiny-muted mb-0">Welcome, {{ student.user.get_full_name|default:student.user.username }}.</p>
+        </div>
+        <a href="{% url 'notice_list' %}" class="btn btn-outline-soft">Notice Board</a>
+    </div>
+
+    <div class="row g-3 mb-3">
+        <div class="col-md-4">
+            <div class="card-surface p-3 h-100">
+                <small class="tiny-muted">Roll Number</small>
+                <h3 class="mb-0">{{ student.roll_number }}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-surface p-3 h-100">
+                <small class="tiny-muted">Course</small>
+                <h5 class="mb-0">{{ student.course.name|default:'Not assigned yet' }}</h5>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-surface p-3 h-100">
+                <small class="tiny-muted">Attendance Records</small>
+                <h3 class="mb-0">{{ attendance.count }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-4"><a href="{% url 'student_profile' %}" class="card-surface p-4 d-block text-decoration-none text-dark h-100"><h5>My Profile</h5><p class="tiny-muted mb-0">Update your bio and profile picture.</p></a></div>
+        <div class="col-md-4"><a href="{% url 'student_attendance' %}" class="card-surface p-4 d-block text-decoration-none text-dark h-100"><h5>Attendance</h5><p class="tiny-muted mb-0">Check daily attendance and status.</p></a></div>
+        <div class="col-md-4"><a href="{% url 'student_results' %}" class="card-surface p-4 d-block text-decoration-none text-dark h-100"><h5>Results</h5><p class="tiny-muted mb-0">Review marks and grade history.</p></a></div>
+    </div>
+</section>
+{% endblock %}

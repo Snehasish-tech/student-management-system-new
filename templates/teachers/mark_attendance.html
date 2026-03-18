@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Mark Attendance - StudentMS{% endblock %}
+
+{% block content %}
+<section class="section-wrap">
+    <div class="card-surface p-4 p-md-5">
+        <h2 class="mb-1">Mark Attendance</h2>
+        <p class="tiny-muted mb-4">Select course first to load the class roster.</p>
+
+        <form method="get" class="row g-2 mb-4">
+            <div class="col-md-9">
+                <select name="course" class="form-select" required>
+                    <option value="">Select Course</option>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}" {% if selected_course_id == course.id|stringformat:'s' %}selected{% endif %}>{{ course.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3 d-grid">
+                <button class="btn btn-outline-soft" type="submit">Load Students</button>
+            </div>
+        </form>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="course" value="{{ selected_course_id }}">
+            <div class="mb-3">
+                <label class="form-label">Date</label>
+                <input type="date" name="date" class="form-control" required>
+            </div>
+
+            <div class="card-surface p-3 mb-4" style="background:#fbfcff;">
+                {% if students %}
+                    <div class="row g-2">
+                        {% for student in students %}
+                            <div class="col-md-6">
+                                <label class="border rounded-3 p-2 w-100 d-flex justify-content-between align-items-center">
+                                    <span>{{ student.user.get_full_name }} <small class="text-secondary">({{ student.roll_number }})</small></span>
+                                    <input type="checkbox" name="student_{{ student.user_id }}" class="form-check-input">
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="tiny-muted mb-0">No students loaded yet. Select a course above.</p>
+                {% endif %}
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary-soft" {% if not students %}disabled{% endif %}>Save Attendance</button>
+                <a href="{% url 'teacher_dashboard' %}" class="btn btn-outline-soft">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

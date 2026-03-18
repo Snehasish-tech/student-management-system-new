@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Subjects • StudentMS{% endblock %}
+
+{% block content %}
+<section class="section-wrap">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Subjects</h2>
+        <a href="{% url 'add_subject' %}" class="btn btn-primary-soft">Add Subject</a>
+    </div>
+
+    <div class="card-surface table-card">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Code</th>
+                        <th>Course</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for subject in subjects %}
+                        <tr>
+                            <td>{{ subject.name }}</td>
+                            <td>{{ subject.code }}</td>
+                            <td>{{ subject.course.name }}</td>
+                            <td class="d-flex gap-2">
+                                <a href="{% url 'edit_subject' subject.id %}" class="btn btn-sm btn-outline-soft">Edit</a>
+                                <a href="{% url 'delete_subject' subject.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this subject?')">Delete</a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="4" class="text-center tiny-muted py-4">No subjects available.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

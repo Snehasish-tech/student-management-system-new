@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Attendance Report • StudentMS{% endblock %}
+
+{% block content %}
+<section class="section-wrap">
+    <h2 class="mb-3">Attendance Report</h2>
+
+    <div class="card-surface p-3 p-md-4 mb-3">
+        <form method="get" class="row g-2 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">Date</label>
+                <input type="date" name="date" value="{{ selected_date }}" class="form-control">
+            </div>
+            <div class="col-md-5">
+                <label class="form-label">Course</label>
+                <select name="course" class="form-select">
+                    <option value="">All Courses</option>
+                    {% for course in courses %}
+                        <option value="{{ course.id }}" {% if selected_course == course.id|stringformat:'s' %}selected{% endif %}>{{ course.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3 d-grid">
+                <button class="btn btn-primary-soft" type="submit">Apply Filter</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="card-surface table-card">
+        <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Course</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in attendance %}
+                        <tr>
+                            <td>{{ item.student.user.get_full_name }}</td>
+                            <td>{{ item.student.course.name|default:'-' }}</td>
+                            <td>{{ item.date|date:'d M Y' }}</td>
+                            <td>
+                                {% if item.is_present %}
+                                    <span class="badge text-bg-success">Present</span>
+                                {% else %}
+                                    <span class="badge text-bg-danger">Absent</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ item.remarks|default:'-' }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr><td colspan="5" class="text-center tiny-muted py-4">No attendance records found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

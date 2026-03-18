@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up • StudentMS{% endblock %}
+
+{% block content %}
+<section class="section-wrap">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card-surface p-4 p-md-5">
+                <h2 class="mb-1">Create your account</h2>
+                <p class="tiny-muted mb-4">Get started as a teacher or student in less than a minute.</p>
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_first_name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" name="first_name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_last_name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" name="last_name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Username</label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Select Your Role</label>
+                        <div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role" value="1" id="teacher" required>
+                                <label class="form-check-label" for="teacher">
+                                    Teacher
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="role" value="2" id="student" required>
+                                <label class="form-check-label" for="student">
+                                    Student
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_password1" class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password1" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_password2" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" name="password2" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary-soft w-100 py-2">Create Account</button>
+                </form>
+
+                <p class="text-center tiny-muted mt-4 mb-0">Already have an account? <a href="{% url 'login' %}" class="fw-semibold">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
