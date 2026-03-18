@@ -68,9 +68,17 @@ def login_view(request):
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
+            identifier = form.cleaned_data['username'].strip()
             password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
+
+            # Support login by either username or email for better UX.
+            login_username = identifier
+            if '@' in identifier:
+                matched_user = User.objects.filter(email__iexact=identifier).first()
+                if matched_user:
+                    login_username = matched_user.username
+
+            user = authenticate(request, username=login_username, password=password)
             
             if user is not None:
                 login(request, user)
@@ -81,7 +89,7 @@ def login_view(request):
                 else:
                     return redirect('student_dashboard')
             else:
-                messages.error(request, 'Invalid username or password.')
+                messages.error(request, 'Invalid username/email or password.')
     else:
         form = UserLoginForm()
     

@@ -13,25 +13,37 @@
                 <form method="post" novalidate>
                     {% csrf_token %}
 
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                    {% endif %}
+
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="id_first_name" class="form-label">First Name</label>
-                            <input type="text" class="form-control" name="first_name" required>
+                            <input type="text" class="form-control" name="first_name" value="{{ request.POST.first_name|default:'' }}" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="id_last_name" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" name="last_name" required>
+                            <input type="text" class="form-control" name="last_name" value="{{ request.POST.last_name|default:'' }}" required>
                         </div>
                     </div>
                     
                     <div class="mb-3">
                         <label for="id_username" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" required>
+                        <input type="text" class="form-control" name="username" value="{{ request.POST.username|default:'' }}" required>
                     </div>
                     
                     <div class="mb-3">
                         <label for="id_email" class="form-label">Email</label>
-                        <input type="email" class="form-control" name="email" required>
+                        <input type="email" class="form-control" name="email" value="{{ request.POST.email|default:'' }}" required>
                     </div>
                     
                     <div class="mb-3">
@@ -55,6 +67,7 @@
                     <div class="mb-3">
                         <label for="id_password1" class="form-label">Password</label>
                         <input type="password" class="form-control" name="password1" required>
+                        <small class="text-muted">Use at least 8 characters, avoid common passwords.</small>
                     </div>
                     
                     <div class="mb-3">
