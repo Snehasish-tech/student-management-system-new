@@ -19,7 +19,7 @@
                 <div class="card-body text-center">
                     <div class="mb-3">
                         <div style="width: 100px; height: 100px; margin: 0 auto;">
-                            <div style="width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(#667eea {{ attendance_percentage }}%, #e0e0e0 0); display: flex; align-items: center; justify-content: center;">
+                            <div style="width: 100%; height: 100%; border-radius: 50%; --attendance-pct: {{ attendance_percentage|floatformat:0 }}%; background: conic-gradient(#667eea var(--attendance-pct), #e0e0e0 0); display: flex; align-items: center; justify-content: center;">
                                 <div style="width: 85px; height: 85px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center;">
                                     <strong style="font-size: 1.5rem;">{{ attendance_percentage|floatformat:0 }}%</strong>
                                 </div>

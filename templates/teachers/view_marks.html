@@ -36,7 +36,7 @@
                             <strong>{{ result.marks }}/100</strong>
                         </td>
                         <td>
-                            <span class="badge" style="background: {% if result.grade == 'A' %}#28a745{% elif result.grade == 'B' %}#17a2b8{% elif result.grade == 'C' %}#ffc107{% elif result.grade == 'D' %}#fd7e14{% else %}#dc3545{% endif %};">
+                            <span class="badge {% if result.grade == 'A' %}bg-success{% elif result.grade == 'B' %}bg-info{% elif result.grade == 'C' %}text-dark bg-warning{% elif result.grade == 'D' %}text-dark bg-warning{% else %}bg-danger{% endif %}">
                                 {{ result.grade }}
                             </span>
                         </td>
